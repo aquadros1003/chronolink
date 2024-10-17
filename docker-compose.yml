@@ -1,0 +1,33 @@
+services:    
+    fractal-backend:
+        build:
+            context: ./chronolink-backend
+            dockerfile: Dockerfile
+        env_file:
+        - ./chronolink-backend/.env
+        volumes:
+        - type: bind
+          source: ./chronolink-backend
+          target: /app
+        ports:
+        - "8000:3000"
+        networks:
+        - chronolink
+
+    db:
+        image: mysql:8.0
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: mysql
+            MYSQL_ROOT_PASSWORD: password
+            MYSQL_PASSWORD: password
+            MYSQL_USER: 
+            SERVICE_TAGS: dev
+            SERVICE_NAME: mysql
+        volumes:
+          - ./db:/var/lib/mysql
+        networks:
+        - chronolink
+
+networks:
+    chronolink:
