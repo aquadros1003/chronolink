@@ -3,6 +3,7 @@ services:
         build:
             context: ./chronolink-backend
             dockerfile: Dockerfile
+        restart: always
         env_file:
         - ./chronolink-backend/.env
         volumes:
@@ -10,7 +11,7 @@ services:
           source: ./chronolink-backend
           target: /app
         ports:
-        - "8000:3000"
+        - "3000:3000"
         networks:
         - chronolink
 
@@ -24,6 +25,8 @@ services:
             MYSQL_USER: 
             SERVICE_TAGS: dev
             SERVICE_NAME: mysql
+        ports:
+            - "3306:3306"
         volumes:
           - ./db:/var/lib/mysql
         networks:
