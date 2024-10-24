@@ -19,7 +19,7 @@ services:
         image: mysql:8.0
         restart: unless-stopped
         environment:
-            MYSQL_DATABASE: mysql
+            MYSQL_DATABASE: chronolink
             MYSQL_ROOT_PASSWORD: password
             MYSQL_PASSWORD: password
             MYSQL_USER: 

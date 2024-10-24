@@ -7,7 +7,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-
 class AuthTest extends TestCase
 {
     use RefreshDatabase;
@@ -18,6 +17,7 @@ class AuthTest extends TestCase
             'name' => 'John Doe',
             'email' => 'john_doe@test.com',
             'password' => 'password',
+            'password_confirmation' => 'password',
         ]);
 
         $response->assertStatus(200);
@@ -29,7 +29,7 @@ class AuthTest extends TestCase
 
     public function testUserLogin(): void
     {
-        $user = User::factory()->create([
+        User::factory()->create([
             'email' => 'john_doe@test.com',
             'password' => Hash::make('password'),
         ]);
@@ -52,13 +52,14 @@ class AuthTest extends TestCase
             'email' => 'john_doe@test.com',
             'password' => Hash::make('password'),
         ]);
-
-        $response = $this->actingAs($user)->getJson('/api/auth/me');
+        $userClient = $this->loggedApiClient($user);
+        $response = $userClient->getJson('/api/auth/me');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'id',
             'name',
             'email',
+            'timelines',
         ]);
     }
 
@@ -75,5 +76,26 @@ class AuthTest extends TestCase
         $response->assertJsonStructure([
             'message',
         ]);
+    }
+
+    public function testRegisterUserWithExistingEmail(): void
+    {
+        User::factory()->create([
+            'email' => 'john_doe@test.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $response = $this->postJson('/api/auth/register', [
+            'name' => 'John Doe',
+            'email' => 'john_doe@test.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+        $response->assertStatus(422);
+        $response->assertJsonStructure([
+            'message',
+        ]);
+
+        $this->assertDatabaseCount('users', 1);
     }
 }
