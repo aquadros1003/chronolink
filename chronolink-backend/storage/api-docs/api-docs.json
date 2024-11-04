@@ -158,6 +158,118 @@
                 }
             }
         },
+        "/api/create-timeline": {
+            "post": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Create a new timeline",
+                "operationId": "store",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My first timeline"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "This is my first timeline"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Timeline created successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/update-timeline/{timeline}": {
+            "put": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Update a timeline",
+                "operationId": "update",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My first timeline"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "This is my first timeline"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Timeline updated successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/delete-timeline/{timeline}": {
+            "delete": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Delete a timeline",
+                "operationId": "destroy",
+                "responses": {
+                    "200": {
+                        "description": "Timeline deleted successfully"
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
         "/api/users": {
             "get": {
                 "tags": [
@@ -180,6 +292,10 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Timeline",
+            "description": "Timeline"
         },
         {
             "name": "Users",
