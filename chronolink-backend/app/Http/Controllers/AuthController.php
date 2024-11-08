@@ -28,7 +28,6 @@ class AuthController extends Controller
         if (! $user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-        $user->timelines;
 
         return response()->json($user, 200);
     }

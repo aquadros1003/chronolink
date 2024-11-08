@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_timeline', function (Blueprint $table) {
-            $table->uuid(column: 'id')->primary();
-            $table->foreignUuid('timeline_id')->constrained()->cascadeOnDelete();
-            $table->foreignUuid('user_id')->constrained()->cascadeOnDelete();
+        Schema::create('timeline_permissions', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->timestamps();
+            $table->foreignUuid('user_timeline_id')->constrained('user_timeline')->cascadeOnDelete();
+            $table->foreignUuid('permission_id')->constrained('permissions')->cascadeOnDelete();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_timeline');
+        Schema::dropIfExists('timeline_permissions');
     }
 };

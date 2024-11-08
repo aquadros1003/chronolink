@@ -1,5 +1,12 @@
 import { apiClient } from "./apiClient";
-import { RegisterRequest, LoginRequest, JWTTokenResponse } from "./types";
+import { RegisterRequest, LoginRequest, JWTTokenResponse, User } from "./types";
+
+export type ApiResponse<T> = {
+  data: T;
+  success: boolean;
+  message?: string;
+  invalidFields?: { [key: string]: string[] };
+};
 
 export function useAuthApi() {
   const login = async (payload: LoginRequest) => {
@@ -30,22 +37,6 @@ export function useAuthApi() {
 
     return response;
   };
-
-  //   const getUser = async () => {
-  //     const response: AxiosResponse<ApiResponse<User>> =
-  //       await apiClient.get('/me');
-  //     const apiResponse: ApiResponse<User> = response.data;
-
-  //     if (!apiResponse.success) {
-  //       if (!apiResponse.message) {
-  //         throw new Error('wiadomosc z frontu');
-  //       }
-
-  //       throw new Error('wiadomosc z backu');
-  //     }
-
-  //     return apiResponse.data;
-  //   };
 
   return {
     login,

@@ -3,18 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TimelineUser extends Model
+class UserTimeline extends Model
 {
-    use HasUuids;
+    use HasFactory, HasUuids;
 
-    protected $table = 'timeline_user';
+    protected $table = 'user_timeline';
 
     protected $fillable = [
         'timeline_id',
         'user_id',
-        'is_owner',
     ];
 
     protected $hidden = [
@@ -30,5 +30,10 @@ class TimelineUser extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function permissions()
+    {
+        return $this->BelongsToMany(Permission::class, 'timeline_permissions', 'user_timeline_id', 'permission_id');
     }
 }

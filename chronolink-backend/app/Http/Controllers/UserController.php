@@ -3,23 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/users",
-     *     summary="Get a list of users",
-     *     operationId="index",
-     *     tags={"Users"},
+     *    path="/api/users/{search}",
+     *    summary="Get a list of users emails",
+     *    operationId="userEmails",
+     *    tags={"Users"},
      *
-     *    @OA\Response(response=200, description="A list with users"),
-     *    @OA\Response(response=400, description="Bad request"),
+     *   @OA\Parameter(
+     *      name="search",
+     *      in="path",
+     *      description="Search string",
+     *      required=true,
+     * ),
+     *
+     * @OA\Response(response=200, description="A list with users emails"),
+     * @OA\Response(response=401, description="Unauthorized"),
      * )
+     * }
      */
-    public function index()
+    public function userEmails($search)
     {
-        return User::all();
+        $user = Auth::user();
+        if (! $user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'List of users emails',
+            'data' => User::where('email', 'like', '%'.$search.'%')->get('email')->pluck('email'),
+        ], 200);
     }
 }

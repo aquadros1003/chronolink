@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\BaseRequest as BaseRequest;
 
-class TimelineRequest extends BaseRequest
+class EventRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,11 @@ class TimelineRequest extends BaseRequest
     {
         return [
             'title' => 'required|string',
-            'description' => 'required|string',
+            'location' => 'string',
+            'start_date' => 'required|date|before:end_date',
+            'end_date' => 'required|date|after:start_date',
+            'timeline_id' => 'required|exists:timelines,id',
+            'label_id' => 'exists:labels,id',
         ];
     }
 }

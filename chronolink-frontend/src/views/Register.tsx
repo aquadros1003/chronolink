@@ -1,7 +1,7 @@
 import backgroundImage from "../assets/background.jpg";
 import RegisterCard from "../components/RegisterCard/RegisterCard";
 
-const Login = () => {
+const Register = () => {
   return (
     <>
       <div
@@ -20,4 +20,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

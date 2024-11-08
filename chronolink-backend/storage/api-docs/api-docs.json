@@ -158,6 +158,357 @@
                 }
             }
         },
+        "/api/create-event": {
+            "post": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Create an event",
+                "operationId": "createEvent",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "start_date",
+                                    "end_date",
+                                    "timeline_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Event title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Event description"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Event location"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-08-01 00:00:00"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-08-01 23:59:59"
+                                    },
+                                    "timeline_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "label_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/update-event/{event}": {
+            "put": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Update an event",
+                "operationId": "updateEvent",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "start_date",
+                                    "end_date",
+                                    "timeline_id"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Event title"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "Event description"
+                                    },
+                                    "location": {
+                                        "type": "string",
+                                        "example": "Event location"
+                                    },
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-08-01 00:00:00"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2021-08-01 23:59:59"
+                                    },
+                                    "timeline_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "label_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Event updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/delete-event/{event}": {
+            "delete": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Delete an event",
+                "operationId": "deleteEvent",
+                "parameters": [
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "Event ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Event deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/permissions": {
+            "get": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Get all permissions",
+                "operationId": "permissions",
+                "responses": {
+                    "200": {
+                        "description": "List of permissions",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/timeline/{timeline}/update-user-permissions": {
+            "put": {
+                "tags": [
+                    "Permissions"
+                ],
+                "summary": "Update user timeline permissions",
+                "operationId": "updateUserTimelinePemissions",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "permissions",
+                                    "user_email"
+                                ],
+                                "properties": {
+                                    "permissions": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "user_email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john_doe@test.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Permissions updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/timelines": {
+            "get": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Get all user timelines",
+                "operationId": "userTimelines",
+                "responses": {
+                    "200": {
+                        "description": "List of timelines"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/timeline/{timeline}": {
+            "get": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Get a timeline",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "timeline",
+                        "in": "path",
+                        "description": "Timeline ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Timeline details",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/create-timeline": {
             "post": {
                 "tags": [
@@ -193,13 +544,28 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Timeline created successfully"
+                        "description": "Timeline created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -239,13 +605,28 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Timeline updated successfully"
+                        "description": "Timeline updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -259,30 +640,123 @@
                 "operationId": "destroy",
                 "responses": {
                     "200": {
-                        "description": "Timeline deleted successfully"
+                        "description": "Timeline deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Bad request"
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
         },
-        "/api/users": {
+        "/api/assign-user/{timeline}": {
+            "post": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Assign a user to a timeline",
+                "operationId": "assignUser",
+                "parameters": [
+                    {
+                        "name": "timeline",
+                        "in": "path",
+                        "description": "Timeline ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "example": "john_doe@test.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User assigned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/users/{search}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
-                "summary": "Get a list of users",
-                "operationId": "index",
+                "summary": "Get a list of users emails",
+                "operationId": "userEmails",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "path",
+                        "description": "Search string",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "A list with users"
+                        "description": "A list with users emails"
                     },
-                    "400": {
-                        "description": "Bad request"
+                    "401": {
+                        "description": "Unauthorized"
                     }
                 }
             }
@@ -292,6 +766,14 @@
         {
             "name": "Auth",
             "description": "Auth"
+        },
+        {
+            "name": "Event",
+            "description": "Event"
+        },
+        {
+            "name": "Permissions",
+            "description": "Permissions"
         },
         {
             "name": "Timeline",

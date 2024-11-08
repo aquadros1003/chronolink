@@ -20,7 +20,7 @@ export const LoginForm = () => {
     try {
       const response = await login(values);
       localStorage.setItem("access_token", response.access_token);
-      navigate("/workspaces");
+      navigate("/timelines");
     } catch {
       setIncorrectCredentials(true);
     }

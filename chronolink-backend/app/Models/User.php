@@ -51,7 +51,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function timelines()
     {
-        return $this->belongsToMany(Timeline::class);
+        return $this->belongsToMany(Timeline::class, 'user_timeline', 'user_id', 'timeline_id');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
     }
 
     public function getJWTIdentifier()

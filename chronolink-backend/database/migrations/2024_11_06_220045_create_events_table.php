@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timelines', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('title');
-            $table->text('description');
-            $table->foreignUuid('owner_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+            $table->string('title');
+            $table->string('location')->nullable();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
+            $table->foreignUuid('timeline_id')->constrained();
+            $table->foreignUuid('user_id')->constrained();
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timelines');
+        Schema::dropIfExists('events');
     }
 };

@@ -12,8 +12,11 @@ abstract class TestCase extends BaseTestCase
         if (! $user) {
             $user = User::factory()->create();
         }
-        $token = auth('api')->login($user);
+        $token = auth('api')->attempt(['email' => $user->email, 'password' => 'password']);
 
-        return $this->withHeader('Authorization ', 'Bearer '.$token);
+        $apiClient = $this->withHeader('Authorization', 'Bearer '.$token);
+        $apiClient = $apiClient->withHeader('Accept', 'application/json');
+
+        return $apiClient;
     }
 }

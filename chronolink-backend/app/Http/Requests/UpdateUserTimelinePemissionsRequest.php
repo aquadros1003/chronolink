@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\BaseRequest as BaseRequest;
 
-class TimelineRequest extends BaseRequest
+class UpdateUserTimelinePemissionsRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class TimelineRequest extends BaseRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'description' => 'required|string',
+            'permissions' => 'required|array',
+            'permissions.*' => 'uuid|exists:permissions,id',
+            'user_email' => 'required|email|exists:users,email',
         ];
     }
 }

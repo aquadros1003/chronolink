@@ -59,7 +59,6 @@ class AuthTest extends TestCase
             'id',
             'name',
             'email',
-            'timelines',
         ]);
     }
 
