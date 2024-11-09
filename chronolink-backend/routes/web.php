@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['prefix' => config('route.prefix')], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
 });

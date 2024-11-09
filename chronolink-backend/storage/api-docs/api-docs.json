@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8000"
+            "url": "https://chronolink.space/apps/backend"
         }
     ],
     "paths": {
@@ -154,6 +154,47 @@
                     },
                     "401": {
                         "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/events/{timeline}": {
+            "get": {
+                "tags": [
+                    "Event"
+                ],
+                "summary": "Get all events",
+                "operationId": "events",
+                "parameters": [
+                    {
+                        "name": "timeline",
+                        "in": "path",
+                        "description": "Timeline ID",
+                        "required": true
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of events per page",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of events",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
                     }
                 }
             }
@@ -350,6 +391,41 @@
                 "responses": {
                     "200": {
                         "description": "Event deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/labels/{timeline}": {
+            "get": {
+                "tags": [
+                    "Label"
+                ],
+                "summary": "Get all labels",
+                "operationId": "labels",
+                "parameters": [
+                    {
+                        "name": "timeline",
+                        "in": "path",
+                        "description": "Timeline ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of labels",
                         "content": {
                             "application/json": {
                                 "schema": {}
