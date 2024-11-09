@@ -40,6 +40,11 @@ class Timeline extends Model
         return $this->hasMany(UserTimeline::class);
     }
 
+    public function labels()
+    {
+        return $this->hasMany(Label::class);
+    }
+
     public function getIsOwnerAttribute()
     {
         return $this->owner_id === auth()->id();

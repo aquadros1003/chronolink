@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->foreignUuid('timeline_id')->constrained();
-            $table->foreignUuid('user_id')->constrained();
+            $table->foreignUuid('timeline_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('label_id')->nullable()->constrained()->nullOnDelete();
         });
     }
 

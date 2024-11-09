@@ -4,10 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EventRequest;
 use App\Models\Event;
+use App\Models\Timeline;
+use App\Models\UserTimeline;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+    /**
+     * @OA\Get(
+     *    path="/api/events/{timeline}",
+     *    summary="Get all events",
+     *    operationId="events",
+     *    tags={"Event"},
+     *
+     *  @OA\Parameter(
+     *    name="timeline",
+     *    in="path",
+     *    description="Timeline ID",
+     *    required=true,
+     * ),
+     * @OA\Parameter(
+     *   name="per_page",
+     *   in="query",
+     *   description="Number of events per page",
+     *   required=false,
+     * ),
+     *
+     * @OA\Response(response=200, description="List of events", @OA\JsonContent()),
+     * @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     * )
+     */
+    public function index(Timeline $timeline, Request $request)
+    {
+        $user = Auth::user();
+        $userTimeline = UserTimeline::where('user_id', $user->id)
+            ->where('timeline_id', $timeline->id)
+            ->first();
+        if (! $userTimeline) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $events = $timeline->events()->paginate($request->per_page ?? 10);
+
+        return response()->json(['status' => 'success', 'message' => 'List of events', 'data' => $events], 200);
+    }
+
     /**
      * @OA\Post(
      *    path="/api/create-event",

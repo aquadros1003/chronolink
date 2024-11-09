@@ -9,6 +9,8 @@ class Event extends Model
 {
     use HasUuids;
 
+    protected $appends = ['label'];
+
     protected $fillable = [
         'title',
         'start_date',
@@ -20,8 +22,8 @@ class Event extends Model
     ];
 
     protected $casts = [
-        'start_date' => 'datetime',
-        'end_date' => 'datetime',
+        'start_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime:Y-m-d',
     ];
 
     protected $hidden = [
@@ -42,8 +44,13 @@ class Event extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function label()
-    // {
-    //     return $this->belongsTo(Label::class);
-    // }
+    public function label()
+    {
+        return $this->belongsTo(Label::class);
+    }
+
+    public function getLabelAttribute()
+    {
+        return $this->label()->first();
+    }
 }

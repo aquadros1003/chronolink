@@ -367,6 +367,177 @@
                 }
             }
         },
+        "/api/create-label": {
+            "post": {
+                "tags": [
+                    "Label"
+                ],
+                "summary": "Create a label",
+                "operationId": "createLabel",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "color",
+                                    "timeline_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Label name"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#000000"
+                                    },
+                                    "timeline_id": {
+                                        "type": "string",
+                                        "example": "00000000-0000-0000-0000-000000000000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/update-label/{label}": {
+            "put": {
+                "tags": [
+                    "Label"
+                ],
+                "summary": "Update a label",
+                "operationId": "updateLabel",
+                "parameters": [
+                    {
+                        "name": "label",
+                        "in": "path",
+                        "description": "Label ID",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "color",
+                                    "timeline_id"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Label name"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "#000000"
+                                    },
+                                    "timeline_id": {
+                                        "type": "string",
+                                        "example": "00000000-0000-0000-0000-000000000000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Label updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Label not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/delete-label/{label}": {
+            "delete": {
+                "tags": [
+                    "Label"
+                ],
+                "summary": "Delete a label",
+                "operationId": "deleteLabel",
+                "parameters": [
+                    {
+                        "name": "label",
+                        "in": "path",
+                        "description": "Label ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Label deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Label not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/permissions": {
             "get": {
                 "tags": [
@@ -770,6 +941,10 @@
         {
             "name": "Event",
             "description": "Event"
+        },
+        {
+            "name": "Label",
+            "description": "Label"
         },
         {
             "name": "Permissions",

@@ -11,13 +11,13 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_emails_unauthorized(): void
+    public function testUserEmailsUnauthorized(): void
     {
         $response = $this->withHeader('Accept', 'application/json')->getJson('/api/users/test');
         $response->assertStatus(401);
     }
 
-    public function test_user_emails(): void
+    public function testUserEmails(): void
     {
         $user = User::factory()->create([
             'email' => 'john_doe@test.com',

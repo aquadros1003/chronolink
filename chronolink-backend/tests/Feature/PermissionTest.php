@@ -65,7 +65,7 @@ class PermissionTest extends TestCase
         ]);
 
         $userClient = $this->loggedApiClient($user);
-        $response = $userClient->putJson('api/timeline/'.$timeline->id.'/update-user-permissions', [
+        $response = $userClient->putJson('api/timelines/'.$timeline->id.'/update-user-permissions', [
             'permissions' => [$permission2->id, $permission3->id],
             'user_email' => $user2->email,
         ]);
