@@ -17,6 +17,7 @@ class EventController extends Controller
      *    summary="Get all events",
      *    operationId="events",
      *    tags={"Event"},
+     *    security={{ "apiAuth": {} }},
      *
      *  @OA\Parameter(
      *    name="timeline",
@@ -56,6 +57,7 @@ class EventController extends Controller
      *    summary="Create an event",
      *    operationId="createEvent",
      *    tags={"Event"},
+     *    security={{ "apiAuth": {} }},
      *
      *    @OA\RequestBody(
      *        required=true,
@@ -99,6 +101,7 @@ class EventController extends Controller
      *    summary="Update an event",
      *    operationId="updateEvent",
      *    tags={"Event"},
+     *    security={{ "apiAuth": {} }},
      *
      *    @OA\Parameter(
      *        name="event",
@@ -126,6 +129,8 @@ class EventController extends Controller
      *    @OA\Response(response=200, description="Event updated", @OA\JsonContent()),
      *    @OA\Response(response=400, description="Bad request", @OA\JsonContent()),
      *    @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *    @OA\Response(response=404, description="Event not found", @OA\JsonContent()),
+     *    @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function update(EventRequest $request, Event $event)
@@ -152,6 +157,7 @@ class EventController extends Controller
      *    path="/api/delete-event/{event}",
      *    summary="Delete an event",
      *    operationId="deleteEvent",
+     *    security={{ "apiAuth": {} }},
      *    tags={"Event"},
      *
      *    @OA\Parameter(
@@ -163,6 +169,7 @@ class EventController extends Controller
      *
      *    @OA\Response(response=200, description="Event deleted", @OA\JsonContent()),
      *    @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *    @OA\Response(response=404, description="Event not found", @OA\JsonContent()),
      * )
      */
     public function destroy(Event $event)

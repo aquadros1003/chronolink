@@ -16,6 +16,7 @@ class LabelController extends Controller
      *    summary="Get all labels",
      *    operationId="labels",
      *    tags={"Label"},
+     *    security={{ "apiAuth": {} }},
      *
      *   @OA\Parameter(
      *     name="timeline",
@@ -48,6 +49,7 @@ class LabelController extends Controller
      *    path="/api/create-label",
      *    summary="Create a label",
      *    operationId="createLabel",
+     *    security={{ "apiAuth": {} }},
      *    tags={"Label"},
      *
      *    @OA\RequestBody(
@@ -64,6 +66,8 @@ class LabelController extends Controller
      *
      * @OA\Response(response=200, description="Label created", @OA\JsonContent()),
      * @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     * @OA\Response(response=404, description="Timeline not found", @OA\JsonContent()),
+     * @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function store(LabelRequest $request)
@@ -93,6 +97,7 @@ class LabelController extends Controller
      *      summary="Update a label",
      *      operationId="updateLabel",
      *      tags={"Label"},
+     *      security={{ "apiAuth": {} }},
      *
      *     @OA\Parameter(
      *         name="label",
@@ -116,6 +121,7 @@ class LabelController extends Controller
      * @OA\Response(response=200, description="Label updated", @OA\JsonContent()),
      * @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
      * @OA\Response(response=404, description="Label not found", @OA\JsonContent()),
+     * @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function update(Label $label, LabelRequest $request)
@@ -144,6 +150,7 @@ class LabelController extends Controller
      *      summary="Delete a label",
      *      operationId="deleteLabel",
      *      tags={"Label"},
+     *      security={{ "apiAuth": {} }},
      *
      *     @OA\Parameter(
      *         name="label",

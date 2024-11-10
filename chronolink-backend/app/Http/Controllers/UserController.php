@@ -13,6 +13,7 @@ class UserController extends Controller
      *    summary="Get a list of users emails",
      *    operationId="userEmails",
      *    tags={"Users"},
+     *    security={{ "apiAuth": {} }},
      *
      *   @OA\Parameter(
      *      name="search",

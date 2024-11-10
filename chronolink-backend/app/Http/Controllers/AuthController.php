@@ -16,6 +16,7 @@ class AuthController extends Controller
      *     path="/api/auth/me",
      *     summary="Get the authenticated user",
      *     operationId="me",
+     *     security={{ "apiAuth": {} }},
      *     tags={"Auth"},
      *
      *     @OA\Response(response=200, description="The authenticated user"),
@@ -54,6 +55,7 @@ class AuthController extends Controller
      *
      *  @OA\Response(response=200, description="User registered successfully"),
      *  @OA\Response(response=400, description="Bad request"),
+     *  @OA\Response(response=422, description="Validation error"),
      * )
      */
     public function register(UserRequest $request)
@@ -107,6 +109,7 @@ class AuthController extends Controller
      *     path="/api/auth/logout",
      *     summary="Logout the authenticated user",
      *     operationId="logout",
+     *     security={{ "apiAuth": {} }},
      *     tags={"Auth"},
      *
      *     @OA\Response(response=200, description="User logged out successfully"),
@@ -129,6 +132,7 @@ class AuthController extends Controller
      *     path="/api/auth/refresh",
      *     summary="Refresh the token",
      *     operationId="refresh",
+     *     security={{ "apiAuth": {} }},
      *     tags={"Auth"},
      *
      *     @OA\Response(response=200, description="Token refreshed successfully"),

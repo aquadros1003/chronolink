@@ -18,6 +18,7 @@ class PermissionController extends Controller
      *    summary="Get all permissions",
      *    operationId="permissions",
      *    tags={"Permissions"},
+     *    security={{ "apiAuth": {} }},
      *
      *   @OA\Response(response=200, description="List of permissions", @OA\JsonContent()),
      *   @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
@@ -38,6 +39,7 @@ class PermissionController extends Controller
      *      summary="Update user timeline permissions",
      *      operationId="updateUserTimelinePemissions",
      *      tags={"Permissions"},
+     *      security={{ "apiAuth": {} }},
      *
      *      @OA\RequestBody(
      *          required=true,
@@ -53,6 +55,7 @@ class PermissionController extends Controller
      * @OA\Response(response=200, description="Permissions updated", @OA\JsonContent()),
      * @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
      * @OA\Response(response=404, description="User not found", @OA\JsonContent()),
+     * @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function updateUserTimelinePemissions(Timeline $timeline, UpdateUserTimelinePemissionsRequest $request)

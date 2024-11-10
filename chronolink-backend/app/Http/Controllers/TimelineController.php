@@ -18,6 +18,7 @@ class TimelineController extends Controller
      *    summary="Get all user timelines",
      *    operationId="userTimelines",
      *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
      *
      *    @OA\Response(response=200, description="List of timelines"),
      *    @OA\Response(response=401, description="Unauthorized"),
@@ -44,6 +45,7 @@ class TimelineController extends Controller
      *    summary="Get a timeline",
      *    operationId="show",
      *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
      *
      *   @OA\Parameter(
      *     name="timeline",
@@ -54,6 +56,7 @@ class TimelineController extends Controller
      *
      *  @OA\Response(response=200, description="Timeline details", @OA\JsonContent()),
      *  @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *  @OA\Response(response=404, description="Timeline not found", @OA\JsonContent()),
      * )
      */
     public function show(Timeline $timeline)
@@ -83,6 +86,7 @@ class TimelineController extends Controller
      *     summary="Create a new timeline",
      *     operationId="store",
      *     tags={"Timeline"},
+     *     security={{ "apiAuth": {} }},
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -98,6 +102,7 @@ class TimelineController extends Controller
      *  @OA\Response(response=200, description="Timeline created successfully", @OA\JsonContent()),
      *  @OA\Response(response=400, description="Bad request", @OA\JsonContent()),
      *  @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *  @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function store(TimelineRequest $request)
@@ -125,6 +130,7 @@ class TimelineController extends Controller
      *    summary="Update a timeline",
      *    operationId="update",
      *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -140,6 +146,8 @@ class TimelineController extends Controller
      *  @OA\Response(response=200, description="Timeline updated successfully", @OA\JsonContent()),
      *  @OA\Response(response=400, description="Bad request", @OA\JsonContent()),
      *  @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *  @OA\Response(response=404, description="Timeline not found", @OA\JsonContent()),
+     *  @OA\Response(response=422, description="Validation error", @OA\JsonContent()),
      * )
      */
     public function update(TimelineRequest $request, Timeline $timeline)
@@ -159,6 +167,7 @@ class TimelineController extends Controller
      *    summary="Delete a timeline",
      *    operationId="destroy",
      *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
      *
      *  @OA\Response(response=200, description="Timeline deleted successfully", @OA\JsonContent()),
      *  @OA\Response(response=400, description="Bad request", @OA\JsonContent()),
@@ -182,6 +191,7 @@ class TimelineController extends Controller
      *    summary="Assign a user to a timeline",
      *    operationId="assignUser",
      *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
      *
      *   @OA\Parameter(
      *     name="timeline",
