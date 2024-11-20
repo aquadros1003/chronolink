@@ -35,7 +35,7 @@ class PermissionController extends Controller
 
     /**
      * @OA\PUT(
-     *      path="/api/timeline/{timeline}/update-user-permissions",
+     *      path="/api/timelines/{timeline}/update-user-permissions",
      *      summary="Update user timeline permissions",
      *      operationId="updateUserTimelinePemissions",
      *      tags={"Permissions"},

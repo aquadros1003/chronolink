@@ -43,7 +43,7 @@ class TimelineController extends Controller
 
     /**
      * @OA\Get(
-     *    path="/api/timeline/{timeline}",
+     *    path="/api/timelines/{timeline}",
      *    summary="Get a timeline",
      *    operationId="show",
      *    tags={"Timeline"},

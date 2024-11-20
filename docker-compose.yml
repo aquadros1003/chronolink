@@ -1,5 +1,5 @@
 services:    
-    fractal-backend:
+    backend:
         build:
             context: ./chronolink-backend
             dockerfile: Dockerfile
@@ -11,7 +11,7 @@ services:
           source: ./chronolink-backend
           target: /app
         ports:
-        - "3000:3000"
+        - "8000:8000"
         networks:
         - chronolink
 
@@ -31,6 +31,18 @@ services:
           - ./db:/var/lib/mysql
         networks:
         - chronolink
+    
+    frontend:
+        build:
+            context: ./chronolink-frontend
+            dockerfile: Dockerfile
+        restart: always
+        volumes:
+        - type: bind
+          source: ./chronolink-frontend
+          target: /app
+        ports:
+        - "5173:5173"
 
 networks:
     chronolink:

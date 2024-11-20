@@ -752,7 +752,7 @@
                 ]
             }
         },
-        "/api/timeline/{timeline}/update-user-permissions": {
+        "/api/timelines/{timeline}/update-user-permissions": {
             "put": {
                 "tags": [
                     "Permissions"
@@ -850,7 +850,7 @@
                 ]
             }
         },
-        "/api/timeline/{timeline}": {
+        "/api/timelines/{timeline}": {
             "get": {
                 "tags": [
                     "Timeline"
@@ -1155,6 +1155,54 @@
                     },
                     "404": {
                         "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/timeline-users/{timeline}": {
+            "get": {
+                "tags": [
+                    "Timeline"
+                ],
+                "summary": "Get all users assigned to a timeline",
+                "operationId": "timelineUsers",
+                "parameters": [
+                    {
+                        "name": "timeline",
+                        "in": "path",
+                        "description": "Timeline ID",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users assigned to a timeline",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Timeline not found",
                         "content": {
                             "application/json": {
                                 "schema": {}

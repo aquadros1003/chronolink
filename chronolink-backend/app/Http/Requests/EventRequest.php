@@ -23,8 +23,8 @@ class EventRequest extends BaseRequest
     {
         return [
             'title' => 'required|string',
-            'location' => 'string',
-            'description' => 'string',
+            'location' => 'string|nullable',
+            'description' => 'string|nullable',
             'start_date' => 'required|date|before:end_date',
             'end_date' => 'required|date|after:start_date',
             'timeline_id' => 'required|exists:timelines,id',

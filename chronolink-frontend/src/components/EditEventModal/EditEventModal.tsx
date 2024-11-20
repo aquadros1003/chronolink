@@ -34,10 +34,10 @@ const EditEventModal = ({
       const values = await form.validateFields();
       await put(`/update-event/${event.id}`, {
         title: values.title,
-        description: values.description,
+        description: values.description || "",
         start_date: dayjs(values.start_date).format("YYYY-MM-DD"),
         end_date: dayjs(values.end_date).format("YYYY-MM-DD"),
-        location: values.location,
+        location: values.location || "",
         label_id: values.label_id,
         timeline_id: timelineId,
       });
