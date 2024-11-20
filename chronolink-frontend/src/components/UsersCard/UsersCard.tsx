@@ -58,6 +58,15 @@ const UsersCard = ({ timelineId }: { timelineId: string }) => {
   return (
     <div className="users-card">
       {loading && <div>Loading...</div>}
+      <Button
+        style={{ marginBottom: 10 }}
+        onClick={() => {
+          navigator.clipboard.writeText(`${window.location.origin}/dashboard/${timelineId}`);
+          message.success("Link copied to clipboard");
+        }}
+      >
+        Copy Link to Timeline
+      </Button>
       <div className="user-search">
         <Select
           showSearch
