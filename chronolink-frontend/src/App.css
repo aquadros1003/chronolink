@@ -42,3 +42,11 @@
 .read-the-docs {
   color: #888;
 }
+
+.timelines {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 80vw;
+  margin: 0 auto;
+}

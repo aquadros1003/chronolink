@@ -38,8 +38,14 @@ export function useAuthApi() {
     return response;
   };
 
+  const logout = async () => {
+    const response = await apiClient.post("/auth/logout");
+    return response;
+  };
+
   return {
     login,
     register,
+    logout,
   };
 }

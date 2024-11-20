@@ -82,7 +82,7 @@ class LabelController extends Controller
         if (! $userTimeline) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CREATE_LABEL')) {
+        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CAN_CREATE_LABEL')) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -135,7 +135,7 @@ class LabelController extends Controller
         if (! $userTimeline) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'UPDATE_LABEL')) {
+        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CAN_UPDATE_LABEL')) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -175,7 +175,7 @@ class LabelController extends Controller
         if (! $userTimeline) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'DELETE_LABEL')) {
+        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CAN_DELETE_LABEL')) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 

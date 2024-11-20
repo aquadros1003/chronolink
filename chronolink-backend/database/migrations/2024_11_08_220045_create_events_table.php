@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('location')->nullable();
+            $table->text('description')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->foreignUuid('timeline_id')->constrained()->cascadeOnDelete();

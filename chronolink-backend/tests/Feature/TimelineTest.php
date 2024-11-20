@@ -229,4 +229,91 @@ class TimelineTest extends TestCase
             'timeline_id' => $timeline->id,
         ]);
     }
+
+    public function testTimelineUsers(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'test123@test.pl',
+            'password' => Hash::make('password'),
+        ]);
+        $user_2 = User::factory()->create([
+            'email' => 'test2@test.pl',
+        ]);
+        $user_3 = User::factory()->create([
+            'email' => 'test3@test.pl',
+        ]);
+        $timeline = Timeline::factory()->create([
+            'title' => 'My Timeline',
+            'description' => 'This is my timeline',
+            'owner_id' => $user->id,
+        ]);
+        UserTimeline::factory()->create([
+            'timeline_id' => $timeline->id,
+            'user_id' => $user->id,
+        ]);
+        $ut2 = UserTimeline::factory()->create([
+            'timeline_id' => $timeline->id,
+            'user_id' => $user_2->id,
+        ]);
+        $ut3 = UserTimeline::factory()->create([
+            'timeline_id' => $timeline->id,
+            'user_id' => $user_3->id,
+        ]);
+        $permission = Permission::factory()->create([
+            'name' => 'CREATE_EVENT',
+        ]);
+        $permission_2 = Permission::factory()->create([
+            'name' => 'UPDATE_EVENT',
+        ]);
+        $permission_3 = Permission::factory()->create([
+            'name' => 'DELETE_EVENT',
+        ]);
+        TimelinePermission::factory()->create([
+            'user_timeline_id' => $ut2->id,
+            'permission_id' => $permission->id,
+        ]);
+        TimelinePermission::factory()->create([
+            'user_timeline_id' => $ut2->id,
+            'permission_id' => $permission_2->id,
+        ]);
+        TimelinePermission::factory()->create([
+            'user_timeline_id' => $ut3->id,
+            'permission_id' => $permission_3->id,
+        ]);
+        $userClient = $this->loggedApiClient($user);
+        $response = $userClient->getJson("api/timelines/{$timeline->id}/users");
+        $response->assertStatus(200);
+        $response->assertJsonFragment([
+            'status' => 'success',
+            'message' => 'List of users assigned to a timeline',
+            'data' => [
+                [
+                    'id' => $user_2->id,
+                    'name' => $user_2->name,
+                    'email' => 'test2@test.pl',
+                    'permissions' => [
+                        [
+                            'id' => $permission->id,
+                            'name' => 'CREATE_EVENT',
+                        ],
+                        [
+                            'id' => $permission_2->id,
+                            'name' => 'UPDATE_EVENT',
+                        ],
+                    ],
+                ],
+                [
+                    'id' => $user_3->id,
+                    'name' => $user_3->name,
+                    'email' => 'test3@test.pl',
+                    'permissions' => [
+                        [
+                            'id' => $permission_3->id,
+                            'name' => 'DELETE_EVENT',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+    }
 }

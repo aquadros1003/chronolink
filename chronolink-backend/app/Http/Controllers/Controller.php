@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 /**
  * @OA\Info(title="ChronoLink API", version="0.1")
+ *
  * @OA\SecurityScheme(
  *     type="http",
  *     description="Login with email and password to get the authentication token",
@@ -13,7 +14,7 @@ namespace App\Http\Controllers;
  *     bearerFormat="JWT",
  *     securityScheme="apiAuth",
  * )
-  */
+ */
 abstract class Controller
 {
     //

@@ -15,6 +15,7 @@ class Event extends Model
         'title',
         'start_date',
         'location',
+        'description',
         'end_date',
         'timeline_id',
         'user_id',

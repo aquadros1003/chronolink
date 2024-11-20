@@ -20,8 +20,6 @@ return new class extends Migration
 
     const CAN_DELETE_LABEL = 'CAN_DELETE_LABEL';
 
-    const CAN_INVITE_USER = 'CAN_INVITE_USER';
-
     /**
      * Run the migrations.
      */
@@ -40,7 +38,6 @@ return new class extends Migration
             ['id' => Str::uuid(), 'name' => self::CAN_CREATE_LABEL, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'name' => self::CAN_UPDATE_LABEL, 'created_at' => now(), 'updated_at' => now()],
             ['id' => Str::uuid(), 'name' => self::CAN_DELETE_LABEL, 'created_at' => now(), 'updated_at' => now()],
-            ['id' => Str::uuid(), 'name' => self::CAN_INVITE_USER, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

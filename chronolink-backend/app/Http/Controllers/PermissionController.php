@@ -72,7 +72,10 @@ class PermissionController extends Controller
         if (! $userTimeline) {
             return response()->json(['error' => 'User not found'], 404);
         }
-        $userTimeline->permissions()->delete();
+        $currentPermissions = TimelinePermission::where('user_timeline_id', $userTimeline->id)->get();
+        foreach ($currentPermissions as $currentPermission) {
+            $currentPermission->delete();
+        }
         foreach ($permissions as $permission) {
             TimelinePermission::create([
                 'user_timeline_id' => $userTimeline->id,

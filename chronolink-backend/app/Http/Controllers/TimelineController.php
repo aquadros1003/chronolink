@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TimelineRequest;
+use App\Models\Label;
+use App\Models\Permission;
 use App\Models\Timeline;
 use App\Models\TimelinePermission;
 use App\Models\User;
@@ -70,8 +72,14 @@ class TimelineController extends Controller
             return response()->json(['error' => 'Timeline not found'], 404);
         }
         $userTimeline = UserTimeline::where('user_id', $user->id)->where('timeline_id', $timeline->id)->first();
-        $permissions = TimelinePermission::where('user_timeline_id', $userTimeline->id)->get();
-        $timeline->permissions = $permissions->pluck('permission');
+        $isOwner = $timeline->owner_id === $user->id;
+        if ($isOwner) {
+            $permissions = Permission::all();
+            $timeline->permissions = $permissions;
+        } else {
+            $permissions = TimelinePermission::where('user_timeline_id', $userTimeline->id)->get();
+            $timeline->permissions = $permissions->pluck('permission');
+        }
 
         return response()->json([
             'status' => 'success',
@@ -116,6 +124,17 @@ class TimelineController extends Controller
             'user_id' => $user->id,
             'timeline_id' => $timeline->id,
         ]);
+        $labels = $request->labels;
+        if ($labels) {
+            foreach ($labels as $label) {
+                Label::firstOrCreate([
+                    'name' => $label['name'],
+                    'color' => $label['color'],
+                    'timeline_id' => $timeline->id,
+                    'user_id' => $user->id,
+                ]);
+            }
+        }
 
         return response()->json([
             'status' => 'success',
@@ -226,6 +245,14 @@ class TimelineController extends Controller
                 'data' => null,
             ], 404);
         }
+        $userTimeline = UserTimeline::where('user_id', $user->id)->where('timeline_id', $timeline->id)->first();
+        if ($userTimeline) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User already assigned',
+                'data' => null,
+            ], 400);
+        }
         UserTimeline::create([
             'user_id' => $user->id,
             'timeline_id' => $timeline->id,
@@ -235,6 +262,50 @@ class TimelineController extends Controller
             'status' => 'success',
             'message' => 'User assigned successfully',
             'data' => $timeline,
+        ], 200);
+    }
+
+    /**
+     * @OA\Get(
+     *    path="/api/timeline-users/{timeline}",
+     *    summary="Get all users assigned to a timeline",
+     *    operationId="timelineUsers",
+     *    tags={"Timeline"},
+     *    security={{ "apiAuth": {} }},
+     *
+     *   @OA\Parameter(
+     *     name="timeline",
+     *     in="path",
+     *     description="Timeline ID",
+     *     required=true,
+     * ),
+     *
+     *  @OA\Response(response=200, description="List of users assigned to a timeline", @OA\JsonContent()),
+     *  @OA\Response(response=401, description="Unauthorized", @OA\JsonContent()),
+     *  @OA\Response(response=404, description="Timeline not found", @OA\JsonContent()),
+     * )
+     */
+    public function timelineUsers(Timeline $timeline)
+    {
+        $user = Auth::user();
+        if (! $user) {
+            return response()->json(['error' => 'Unauthenticated'], 401);
+        }
+        $timeline = $user->timelines()->find($timeline->id);
+        if (! $timeline) {
+            return response()->json(['error' => 'Timeline not found'], 404);
+        }
+        $users = $timeline->users()->where('user_id', '!=', $timeline->owner_id)->get(['users.id', 'users.name', 'users.email']);
+        foreach ($users as $user) {
+            $userTimeline = UserTimeline::where('user_id', $user->id)->where('timeline_id', $timeline->id)->first();
+            $permissions = TimelinePermission::where('user_timeline_id', $userTimeline->id)->get();
+            $user->permissions = $permissions->pluck('permission');
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'List of users assigned to a timeline',
+            'data' => $users,
         ], 200);
     }
 }

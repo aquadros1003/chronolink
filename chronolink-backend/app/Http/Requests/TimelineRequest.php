@@ -24,6 +24,7 @@ class TimelineRequest extends BaseRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
+            'labels' => 'array',
         ];
     }
 }

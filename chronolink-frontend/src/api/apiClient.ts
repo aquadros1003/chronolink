@@ -1,4 +1,5 @@
 import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const apiClient = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/api`,

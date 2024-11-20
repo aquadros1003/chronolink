@@ -46,7 +46,7 @@ class EventController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $events = $timeline->events()->paginate($request->per_page ?? 10);
+        $events = $timeline->events()->orderBy('start_date', 'asc')->paginate($request->per_page ?? 10);
 
         return response()->json(['status' => 'success', 'message' => 'List of events', 'data' => $events], 200);
     }
@@ -139,9 +139,15 @@ class EventController extends Controller
         if (! $user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-        $event = $user->events()->where('id', $event->id)->first();
-        if (! $event) {
-            return response()->json(['error' => 'Event not found'], 404);
+        $timeline = $event->timeline()->first();
+        $userTimeline = UserTimeline::where('user_id', $user->id)
+            ->where('timeline_id', $timeline->id)
+            ->first();
+        if (! $userTimeline) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CAN_DELETE_EVENT')) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         $event->update($request->validated());
 
@@ -178,9 +184,15 @@ class EventController extends Controller
         if (! $user) {
             return response()->json(['error' => 'Unauthenticated'], 401);
         }
-        $event = $user->events()->where('id', $event->id)->first();
-        if (! $event) {
-            return response()->json(['error' => 'Event not found'], 404);
+        $timeline = $event->timeline()->first();
+        $userTimeline = UserTimeline::where('user_id', $user->id)
+            ->where('timeline_id', $timeline->id)
+            ->first();
+        if (! $userTimeline) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        if ($userTimeline->timeline->owner_id !== $user->id && ! $userTimeline->permissions->contains('name', 'CAN_DELETE_EVENT')) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         $event->delete();
 

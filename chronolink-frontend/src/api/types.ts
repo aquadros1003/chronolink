@@ -16,7 +16,8 @@ export type JWTTokenResponse = {
   token_type: string;
 };
 
-export type Timeline = {
+export type TimelineType = {
+  name: any;
   id: number;
   title: string;
   description: string;
@@ -29,5 +30,45 @@ export type User = {
   email: string;
   created_at: string;
   updated_at: string;
-  timelines: Timeline[];
+  timelines: TimelineType[];
+};
+
+export type CreateTimelineRequest = {
+  title: string;
+  description: string;
+};
+
+export type LabelType = {
+  id: string;
+  name: string;
+  color: string;
+};
+
+export type EventType = {
+  id: string;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  location: string;
+  label: LabelType;
+};
+
+export type CreateEventRequest = {
+  title: string;
+  start_date: string;
+  end_date: string;
+  location: string;
+  description: string;
+  label_id: number;
+};
+
+export type PermissionType = {
+  id: number;
+  name: string;
+};
+
+export type CreateLabelRequest = {
+  name: string;
+  color: string;
 };

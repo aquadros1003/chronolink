@@ -26,12 +26,13 @@ Route::group(['prefix' => config('route.prefix').'/api'], function () {
         Route::POST('assign-user/{timeline}', [TimelineController::class, 'assignUser']);
         Route::GET('timelines/{timeline}', [TimelineController::class, 'show']);
         Route::GET('events/{timeline}', [EventController::class, 'index']);
+        Route::GET('timelines/{timeline}/users', [TimelineController::class, 'timelineUsers']);
     });
 
     Route::group(['middleware' => 'auth:api'], function () {
         Route::GET('labels/{timeline}', [LabelController::class, 'index']);
         Route::POST('create-label', [LabelController::class, 'store']);
-        Route::PUT('update-label/{label}', [LabelController::class, 'update']);
+        Route::PUT('update-label/{label}', action: [LabelController::class, 'update']);
         Route::DELETE('delete-label/{label}', [LabelController::class, 'destroy']);
     });
 
