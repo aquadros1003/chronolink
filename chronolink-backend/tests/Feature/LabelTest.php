@@ -120,7 +120,7 @@ class LabelTest extends TestCase
             'user_id' => $user->id,
         ]);
         $permission = Permission::factory()->create([
-            'name' => 'UPDATE_LABEL',
+            'name' => 'CAN_UPDATE_LABEL',
         ]);
         TimelinePermission::factory()->create([
             'user_timeline_id' => $userTimeline->id,
@@ -170,7 +170,7 @@ class LabelTest extends TestCase
             'user_id' => $user->id,
         ]);
         $permission = Permission::factory()->create([
-            'name' => 'DELETE_LABEL',
+            'name' => 'CAN_DELETE_LABEL',
         ]);
         TimelinePermission::factory()->create([
             'user_timeline_id' => $userTimeline->id,

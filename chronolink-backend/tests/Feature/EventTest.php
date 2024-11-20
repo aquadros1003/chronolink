@@ -49,7 +49,11 @@ class EventTest extends TestCase
             'email' => 'john_doe@test.com',
             'password' => Hash::make('password'),
         ]);
-        $timeline = Timeline::factory()->create();
+        $timeline = Timeline::factory()->create(["owner_id" => $user->id]);
+        UserTimeline::factory()->create([
+            'user_id' => $user->id,
+            'timeline_id' => $timeline->id,
+        ]);
         $label = $timeline->labels()->create([
             'name' => 'My Label',
             'color' => '#FF0000',
@@ -58,6 +62,7 @@ class EventTest extends TestCase
         $event = $user->events()->create([
             'title' => 'My Event',
             'location' => 'My location',
+            'description' => 'My description',
             'start_date' => '2024-10-10',
             'end_date' => '2024-10-11',
             'timeline_id' => $timeline->id,
@@ -66,6 +71,7 @@ class EventTest extends TestCase
         $response = $userClient->putJson('api/update-event/'.$event->id, [
             'title' => 'Updated Event',
             'location' => 'Updated location',
+            'description' => 'Updated description',
             'start_date' => '2024-10-11',
             'end_date' => '2024-10-12',
             'timeline_id' => $timeline->id,
@@ -79,6 +85,7 @@ class EventTest extends TestCase
                 'id' => $event->id,
                 'title' => 'Updated Event',
                 'location' => 'Updated location',
+                'description' => 'Updated description',
                 'start_date' => '2024-10-11',
                 'end_date' => '2024-10-12',
                 'label' => [
@@ -104,7 +111,11 @@ class EventTest extends TestCase
             'email' => 'john_doe@test.com',
             'password' => Hash::make('password'),
         ]);
-        $timeline = Timeline::factory()->create();
+        $timeline = Timeline::factory()->create(["owner_id" => $user->id]);
+        UserTimeline::factory()->create([
+            'user_id' => $user->id,
+            'timeline_id' => $timeline->id,
+        ]);
         $event = $user->events()->create([
             'title' => 'My Event',
             'location' => 'My location',
