@@ -61,7 +61,9 @@ const UsersCard = ({ timelineId }: { timelineId: string }) => {
       <Button
         style={{ marginBottom: 10 }}
         onClick={() => {
-          navigator.clipboard.writeText(`${window.location.origin}/dashboard/${timelineId}`);
+          navigator.clipboard.writeText(
+            `${window.location.origin}/dashboard/${timelineId}`,
+          );
           message.success("Link copied to clipboard");
         }}
       >
